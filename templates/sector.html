@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+{#% set active_page = "countries" %#} 
+{% block title %}{{ totalYear.land }}: {{ activities[0]['sector_de'] }} {% endblock %}
+{% block body %}
+ 
+
+			<div class="span8 spaceheader">
+                <h1>Projekte im Schwerpunkt {{ activities[0]['sector_de'] }} </h1>
+            </div>
+            <div class="span4 spacetree">
+                <span class="recipientname"> {{ totalYear.land}}</span>
+            </div>
+        </div>
+		<div class="row">
+			<div class="span8">
+				<div id="mainvis" style="width: auto; height: 300px;"> </div>
+			<div class="subline">Quelle: <a href="http://stats.oecd.org/index.aspx?DataSetCode=CRS1" target="_blank">OECD: CRS Datenbank</a> | Bitte <a href="/daten/">Hinweise zu den Daten</a> beachten.	</div>
+			</div>
+            <div class="span4 seitenbox"><p>Die deutsche staatliche Entwicklungszusammenarbeit hat in dem Schwerpunkt {{ activities[0]['sector_de'] }} seit 2000 {{ totalYear.total|number_trunc()|number_format() }} USD zugesagt und bisher {{ totalYear.disb_total|number_trunc()|number_format() }} ausgegeben.</p> <p>Die meisten Zuwendungen deutscher staatlicher Entwicklungshilfe für den Schwerpunkt {{ activities[0]['sector_de'] }} gingen mit {{ spitzenreiter['total']|number_trunc()|number_format() }}
+                USD an  {{ spitzenreiter['land'] }}.</p><p><a href="/schwerpunkte/">Alle Schwerpunkte im Überblick</a>.</p>
+			</div>
+			
+		</div>	
+		<div class="row spacetop">
+			
+			<div class="span6 center">
+				{% include 'macro/sector-chart.html' %}
+                <h2>Deutsche Ausgaben {{ activities[0]['sector_de'] }} </h2>
+			
+			<div id="history" style="width: auto"></div>
+			<div class="subline">Genaue Zahlen per Maus-Hover | Quelle: OECD</div>
+					</div>		
+			<div class="span6 center">
+							<h2>
+							Anzahl Projekte			
+								</h2>
+						<div id="human" style="width: auto"></div>
+						<div class="subline">Genaue Zahlen per Maus-Hover | Quelle: OECD</div>
+			</div>
+			
+		</div>
+		<div class="row spacetop spacebottom">
+				<div class="span12">
+					<h2>Alle Projekte in der Übersicht ({{ totalYear.land}})</h2>
+				</div>
+				<div class="span5">
+			
+				</div>
+			</div>
+		<div class="row">
+			<div class="span12">
+				<table id="sortTable" class="table table-striped">
+					<thead>
+						<tr>
+							<th class="header green">Projekt</th>
+						<th class="header black">Zweck</th>
+						<th class="header black">Organisation</th>
+						
+						<th class="header orange">Startjahr</th>
+						<th class="header blue currency headerSortUp">Beträge</th>
+						<th class="header green">Art</th>
+						
+						</tr>
+					</thead>
+					<tbody>
+					{% for entry in entries %}
+  					
+					<tr>
+  						{% set rowloop = loop %}
+    					<td class="project">{{ entry['projecttitle'] }}</td>
+    				<td class="purpose">{{ entry['purposename'] }}</td>
+						<td class="agency">{{ entry['agencyname'] }}</td>
+						<td class="year">{{ entry['Year'] }}</td>
+						<td class="currency">{{ entry['main_value']|number_trunc()|number_format() }} USD</td>
+						<td class="flow last">{{ entry['flowname'] }}</td>
+						
+  					</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+					<div id="poptop"><p><a href="#" rel="tooltip" title="CRS Daten" data-content="Die Informationen aus der Taballe kommen von dem Creditor Reporting System (CRS) der OECD, die jeweils von den Mitgliedsländern (Bundesregierung) geliefert werden. Nicht selten fehlen hier leider Informationen besonders bei den Projekttiteln, oder diese werden oftmals nur in Englisch geliefert. Wir weisen darauf hin, dass dies exakt die Information von der OECD sind und die OKF
+                            nicht verantwortlich für fehlende oder falsche Daten ist.">Warum sind die Zwecke und Projekte teilweise in Englisch oder fehlen?</a> | <a href="#" rel="tooltip" title="Unterschied Grant und Loan?" data-content="Die staatliche Entwicklungshilfe erfolgt in Zuschüssen (Grants), die nicht zurückgezahlt werden und Krediten (Loans), die meist zu niedrigen Zinsen und einer langen Laufzeit angeboten werden.">Unterschied Grant und Loan?</a></p></div>
+					{% include 'macro/quellen.html' %}
+				
+			</div>
+
+{% include 'macro/openspending.html' %}
+</div>
+<div class="span10 spacetop">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'offeneentwicklungshilfe';
+    var disqus_identifier = '{{request.path}}';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+
+
+<script>
+$(document).ready(function() {
+    OpenSpending.DatasetPage.init({
+        treemapData: {"children": [
+	{% for entry in purposes|sort(attribute='main_value') %}
+{"data": {"title": "{{ entry['purposename'] }}", "$area": {{ entry['treearea'] }}, "$color": "{{ entry['color'] }}", "value": "{{ entry['main_value']|number_trunc()|number_format() }} US $", "printable_value": "{{ entry['purposename'] }}", "link": "", "show_title": {{ entry['show'] }}}, "children": [], "name": "{{ entry['main_value']|number_trunc()|number_format() }}", "id": "{{ entry['rowid'] }}"}{% if loop.last == False %},{% endif %}
+{% endfor %}
+	    ]}
+    });
+});
+</script>
+{% endblock %}

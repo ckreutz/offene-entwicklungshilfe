@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% set active_page = "schwerpunkte" %} 
+{% block title %}Schwerpunkte{% endblock %}
+{% block body %}
+ 
+
+			<div class="span8 spaceheader spacebottom">
+				<h1>Alle Schwerpunkte </h1>
+			</div>				
+			<div class="span4 left spaceheader spacebottom">
+			</div>
+    	</div>
+		<div class="row">
+			<div class="span12">
+				<div id="mainvis" style="width: auto; height: 300px;"> </div>
+			<div class="subline">Quelle: <a href="http://stats.oecd.org/index.aspx?DataSetCode=CRS1" target="_blank">OECD: CRS Datenbank</a> | Bitte <a href="/daten/">Hinweise zu den Daten</a> beachten. </div>
+			</div>
+			<div class="span4">
+		</div>	
+		</div>
+		<div class="row spacetop">
+				<div class="span6">
+					<h2>Alle Schwerpunkte in der Übersicht 2000 - 2011</h2>
+				</div>
+			</div>
+		<div class="row">
+			<div class="span12">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+						<th class="header schwerpunkte">Schwerpunkte</th>
+						<th class="header currency">Beträge</th>
+						<th class="header projekte">Projekte</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for entry in entries|sort(attribute='main_value', reverse=true) %}
+	 					{% if entry['main_value'] > 0 %}
+					
+					<tr>
+  						{% set rowloop = loop %}
+                        <td class="sector"><a href="{{ url_for('show_schwerpunkt', schwerpunkt=entry.sectorcode) }}">{{ entry['sector_de'] }}</a></td>
+						<td class="currency">{{ entry['main_value']|number_trunc()|number_format() }} USD</td>
+                        <td class="anzahl last">{{ entry['activities'] }}</td>
+  					</tr>
+					{% endif %}
+					{% endfor %}
+					</tbody>
+				</table>
+				{% include 'macro/quellen.html' %}
+</div>
+{% include 'macro/openspending.html' %}
+</div>
+<div class="span10 spacetop">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'offeneentwicklungshilfe';
+    var disqus_identifier = '{{request.path}}';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+
+<script>
+$(document).ready(function() {
+    OpenSpending.DatasetPage.init({
+        treemapData: {"children": [
+	{% for entry in entries|sort(attribute='main_value') %}
+		{% if entry['main_value'] > 0 %}
+{"data": {"title": "{{ entry['sector_de'] }}", "$area": {{ entry['treearea'] }}, "$color": "{{ entry['color'] }}", "value": "{{ entry['main_value']|number_trunc()|number_format() }} USD", "printable_value": "{{ entry['sector_de'] }}", "link": "{{ url_for('show_schwerpunkt', schwerpunkt=entry.sectorcode) }}", "show_title": {{ entry['show'] }}}, "children": [], "name": "{{ entry['main_value']|number_trunc()|number_format()  }}", "id": "{{ entry['crsid'] }}"}{% if loop.last == False %},{% endif %}
+{% endif %}
+{% endfor %}
+	    ]}
+    });
+});
+</script>
+{% endblock %}

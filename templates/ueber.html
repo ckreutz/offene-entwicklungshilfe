@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% set active_page = "ueber" %} 
+{% block title %}Über diese Seite {% endblock %}
+{% block body %}
+ 
+
+	<div class="span12 spacetop">
+			<h1>Über diese Seite</h1>
+
+		
+		</div>
+</div>
+<div class="row">
+
+<div class="span9">
+
+
+<p>	Offene Entwicklungshilfe ist eine Seite des OpenAid Projektes der Open Knowledge Foundation. Die Webseite stellt die Finanzflüsse der deutschen Entwicklungszusammenarbeit in den letzten zehn Jahren dar. </p>
+
+<h2>	Das Problem</h2><p>
+	Für die entwicklungspolitische Analyse und Politikgestaltung sind umfassende und aktuelle Informationen nötig. Darüber hinaus müssen solche Informationen leicht und frei zugänglich sein. </p><p>
+
+  <p>Dieser Bedarf wird durch die entwicklungspolitischen Akteure gegenwärtig nicht gedeckt. </p><ul><li><p>
+    Das Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung bietet auf seiner Webseite Übersichtstabellen aggregierter Finanzdaten, die keine Detailanalyse im Hinblick auf Sektoren oder Trends erlauben.</p></li><li><p>
+    Umsetzungsorganisationen bieten Projektbeschreibung, jedoch ohne Finanzdaten. </p></li><li><p>
+    Nur wenige nichtstaatliche Organisationen veröffentlichen eine Liste ihrer Projekte.</p></li><li><p>
+    Die Bundesregierung berichtet über die geleistete Entwicklungszusammenarbeit an das Creditor Reporting System der OECD Development Assistance Committee. Diese statistisch validierten Informationen sind jedoch ein bis zwei Jahre alt.</p></li><li><p>
+    Dennoch erlaubt die vorhandene Datenbasis einen umfassenden Überblick darüber welche Geber in welchem Land in welchem Jahr und in welchem Sektor Entwicklungszusammenarbeit leistet, was diese Webseite hoffentlich anschaulich darstellt.</p></li><li><p>
+    Bis auf die OECD Daten sind die vorhandenen Informationen nicht maschinenlesbar und somit nur unter großem Aufwand für weitere Analysen nutzbar.</p></li><li><p>
+	Die Weiternutzung der Daten ist zudem rechtlich beschränkt durch fehlende oder einschränkende Copyright Regelungen.</li></ul>
+
+	<h2>Ziel der Beta-Version</h2>
+    <p>Offene Entwicklungshilfe ist ein erster Schritt, den Zugang zu entwicklungspolitischen Basisdaten für Mitarbeiter von EZ Organisationen, für Journalisten, Parlamentarier und die interessierte Öffentlichkeit zu verbessern. </p>
+
+    <p>
+Die gewählten Indikatoren sollen keine direkten Kausalbeziehungen zwischen der deutschen EZ und der sozioökonomischen Entwicklung der Partnerländer suggerieren. Statt dessen sollen sie dazu anregen, weiterführende Fragen zur stellen. Vorschläge zu sinnvolleren Indikatoren und zur Verbesserung der Seite insgesamt sind willkommen.
+    </p>
+
+<p>	Offene Entwicklungshilfe soll darüber hinaus das Potential von maschinenlesbaren und rechtlich offenen Daten für die entwicklungspolitische Analyse aufzeigen. Die hier verwendeten Daten stellen nur einen Bruchteil der von EZ Organisationen gesammelten Daten dar. Eine weitgehende Öffnung solcher Daten könnte die entwicklungspolitische Analyse verbessern, Koordination fördern und Korruption eindämmen. </p>
+
+<h2>	Weitere Entwicklung der Webseite</h2>
+	<p>Die hier verwendeten Daten beruhen auf dem Creditor Reporting System der OECD DAC. Eine aktuellere und detailliertere Visualisierung der Finanzflüsse ist möglich, sobald die Bundesregierung, die Durchführungsorganisationen und auch die nichtstaatlichen Organisationen den auf dem High Level Forum on Aid Effectiveness in Busan vereinbarten Datenstandard der International Aid Transparency Initiative (IATI) umsetzen.</p>
+
+    <p>Durch Kooperation mit den Organisationen der Entwicklungszusammenarbeit soll die Datenbasis erweitert und die Analysetools erweitert werden.</p>
+    <h2>Team</h2>  Konzept, Datenanalyse und technische Umsetzung: <b>Christian Kreutz Christian.Kreutz at okfn.org</b><br>
+    Politische Arbeit und Öffentlichkeitsarbeit: <b>Claudia Schwegmann claudia.schwegmann at openaid.de</b><br>
+    <a href="http://lists.okfn.org/mailman/listinfo/open-aid-de">Mailingliste</a>
+    </p>
+</div>
+
+<div class="span3">
+    <h2>Aktualisierungen</h2>
+    
+    <p>
+<b>21.02.2013</b>
+<br>
+Korrektur bei den Schwerpunkten in den Ländern. Die Ausgaben und die Zusagen waren identisch.
+</p>
+    <p>
+<b>16.02.2013</b>
+<br>
+Import der Daten für das Jahr 2011
+</p>
+    <p>
+<b>11.11.2012</b>
+<br>
+Korrektur eines Fehlers bei der Berechnung der Top 5 Schwerpunkte eines Landes 
+</p>
+	
+</div>
+</div>
+<div class="span10 spacetop">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'offeneentwicklungshilfe';
+    var disqus_identifier = '{{request.path}}';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+
+{% endblock %}
+

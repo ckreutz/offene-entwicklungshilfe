@@ -1,0 +1,190 @@
+{% extends "layout.html" %}
+{% set active_page = "countries" %} 
+{% block title %}Empfängerland: {{ info.land}} {% endblock %}
+{% block body %}
+ 
+
+			<div class="span8 spaceheader spacebottom">
+                <h1>Alle Schwerpunkte in {{ info.land }} - {{ info.jahr}} </h1>
+			</div>				
+			<div class="span4 left spaceheader spacebottom">
+				<div class="btn-group">
+				          <button class="btn btn-large dropdown-toggle" data-toggle="dropdown">Andere Jahre <span class="caret"></span></button>
+				          <ul class="dropdown-menu">
+				            {% for number in Years %}
+<li><a href="{{ url_for('show_recipient_year', country=number['recipientcode'], year=number['jahr']) }}">{{number['jahr']}}</a> </li>							{% endfor %}
+				          </ul> 		</div>
+			</div>
+    	</div>
+		<div class="row">
+			<div class="span8">
+				<div id="mainvis" style="width: auto; height: 300px;"> </div>
+			<div class="subline">Quelle: <a href="http://stats.oecd.org/index.aspx?DataSetCode=CRS1" target="_blank">OECD: CRS Datenbank</a> | Bitte <a href="/daten/">Hinweise zu den Daten</a> beachten. </div>
+			</div>
+			<div class="span4">
+			<div id="popleft" class="seitenbox">	<p>In <span class="big-letter">{{ info.land}}</span> gab es in den Jahren 2000 bis 2011 <span class="big-letter">{{ info.total_activities}} Projekte</span> der deutschen Entwicklungshilfe. Dabei wurden im Rahmen der <a href="#" rel="tooltip" title="Was ist ODA?" data-content="Die Official Development Assistance (kurz: ODA) umfasst die Bereitstellung finanzieller (FZ), technischer (TZ) und personeller Leistungen (PZ) im Rahmen der öffentlichen
+                    Entwicklungszusammenarbeit nach der Definition des Development Assistance Committee (DAC) von der OECD.">ODA</a> <span class="big-letter">{{ info.disbursement|number_trunc()|number_format()}} USD</span> ausgegeben und bisher {{ info['total_sum']|number_trunc()|number_format() }} USD zugesagt. (<a href="#" rel="tooltip" title="Was ist der Unterschied zwischen Ausgaben und Zusagen?" data-content="Die deutsche Bundesregierung macht im Rahmen der internationale Zusammenarbeit Zusagen für ihre Beiträge. Die Gelder fließen daraufhin in den folgenden Jahren, müssen aber nicht immer genau den Zusagen entsprechen.">Ausgaben vs. Zusagen</a>)
+				Auf der Liste der Empfänger deutscher Entwicklungshilfe in den letzten 10 Jahren steht {{ info.land }} auf Platz <span class="big-letter"> {{ position[0]['pole'] }}</span> (181).</p> 
+					<p>
+				</p><a href="#" rel="tooltip" title="Was sind alles ODA-Mittel?" data-content="Hinter den ODA Mitteln stecken typische Maßnahmen der Entwicklungshilfe, aber auch zum Beispiel Kosten für ausländische Studenten, die für ihr Studium in Deutschland gefördert werden und auch umstrittene Dinge, wie die Rückführung von Flüchtlingen.">Was verbirgt sich hinter ODA-Mitteln?</a></div>
+			</div>
+		</div>	
+		<div class="row spacetree spacebottom">
+			
+			<div class="span6 center">
+				{% include 'macro/country-chart.html' %}
+				<h2>Ausgaben 2000-2011</h2>
+			
+			<div id="history" style="width: auto"></div>
+			<div class="subline">Genaue Zahlen per Maus-Hover | Quelle: OECD</div>
+					</div>		
+			<div class="span6 center">
+							<h2>Top 5 Schwerpunkte</h2>
+						<div id="human" style="width: auto"></div>
+						<div class="subline">Genaue Zahlen per Maus-Hover | Quelle: OECD</div>
+			</div>
+			
+		</div>
+		<div class="row">
+			<div class="span5 graphtext1">
+				<p>Die staatliche Entwicklungshilfe erfolgt in Zuschüssen (Grants), die nicht zurückgezahlt werden und Krediten (Loans), die meist zu niedrigen Zinsen und einer langen Laufzeit angeboten werden. </p>
+		</div>
+		<div class="span5 graphtext2">
+      <p> Die Übersicht zeigt die 5 Schwerpunkte mit den höchsten Ausgaben zwischen 2000 und 2011 für {{ info.land }}. </p>
+				</div>
+		</div>
+		<div class="row spacetop">
+		
+			<div class="span12">
+				<h2>Indikatoren für {{ info.land }}</h2>
+				<p>Hier stehen jeweils die Veränderungen von ausgewählten Indikatoren in den letzten 10 Jahren.</p>
+            </div>              
+        </div>
+		<div class="row spacetop">
+                   <div class="span12">  
+                   <div id="poptop">
+					<div class="ind">
+                    {% for value in wb_average %}
+                      {% if value['average'] != None %}                        
+                 <div class="indicator format">
+				   <a href="#" rel="tooltip" title="Indikator" data-content="{{ value['indicator_name'] }} <br> 2000: {{ value['t2000']|round(2) }} <br>  2009: {{ value['t2009']|round(2) }}
+				     {% if value['t2010'] != 0.0 %}                        
+				      <br>  2010: {{ value['t2010']|round(2) }}
+				      {% endif %}
+				      ">
+                     <img src="/static/img/{{ value['short'] }}.png" alt="Symbol {{ value['attribution'] }}" title="Symbol {{ value['attribution'] }}"><br>
+                      {{ value['short'] }}</a>
+                      </div>
+					{% endif %}
+                      {% endfor %}
+					 </div>
+         </div>
+         
+				</div>
+						</div>
+		<div class="row">
+				<div class="span12">
+					<script type="text/javascript">
+					    $(function() {
+					        var myvalues = [
+						    {% for value in wb_average %}
+					        {% if value['average'] != None  %}
+							{{ value['average'] }}{% if loop.last == False %},{% endif %}
+							{% endif %}
+                            {% endfor %}
+							
+							];
+					        /* The second argument gives options such as chart type */
+					        $('.dynamicbar').sparkline(myvalues, {type: 'bar', barColor: '#07833b', negBarColor: '#bb5d02', height: 200, barWidth: 75, barSpacing: 10} );
+					    });
+					    </script>
+						<p>
+						<span class="dynamicbar">Loading..</span>
+						</p>
+					
+					</div>
+			</div>
+			<div class="row">
+								<div class="span12">
+									<div class="diff">
+									{% for value in wb_average %}
+					                {% if value['average'] != None %}
+									<div class="difference format">
+									{% if value['average'] < 0 %}
+									<span class="minus">
+									{% else %}
+										<span class="positiv">
+											{% endif %}
+										{{ value['average']|round(2) }}%	
+									</span>
+										</div>						
+                                    {% endif %}
+									{% endfor %}
+                                </div>
+									</div>
+				</div>
+		<div class="row spacetop">
+				<div class="span6">
+					<h2>Alle Schwerpunkte in der Übersicht</h2>
+				</div>
+				<div class="span5">
+				
+				</div>
+			</div>
+		<div class="row">
+			<div class="span12">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+						<th class="header schwerpunkte">Schwerpunkte</th>
+						<th class="header currency">Beträge</th>
+						<th class="header projekte">Projekte</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for entry in entries|sort(attribute='main_value', reverse=true) %}
+	 					{% if entry['main_value'] > 0 %}
+					
+					<tr>
+  						{% set rowloop = loop %}
+    					<td class="sector"><a href="{{ url_for('show_sektor', country=info.recipientcode, sector=entry['sectorcode'] ) }}">{{ entry['sector_de'] }}</a></td>
+						<td class="currency">{{ entry['main_value']|number_trunc()|number_format() }} USD</td>
+						<td class="anzahl last">{{ entry['activities'] }}</td>
+  					</tr>
+					{% endif %}
+					{% endfor %}
+					</tbody>
+				</table>
+				{% include 'macro/quellen.html' %}
+</div>
+{% include 'macro/openspending.html' %}
+</div>
+<div class="span10 spacetop">
+        <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'offeneentwicklungshilfe';
+        var disqus_identifier = '{{request.path}}';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+
+<script>
+$(document).ready(function() {
+    OpenSpending.DatasetPage.init({
+        treemapData: {"children": [
+	{% for entry in entries|sort(attribute='main_value') %}
+		{% if entry['main_value'] > 0 %}
+{"data": {"title": "{{ entry['sector_de'] }}", "$area": {{ entry['treearea'] }}, "$color": "{{ entry['color'] }}", "value": "{{ entry['main_value']|number_trunc()|number_format() }} USD", "printable_value": "{{ entry['sector_de'] }}", "link": "{{ url_for('show_sektor', country=info.recipientcode, sector=entry['sectorcode']) }}", "show_title": {{ entry['show'] }}}, "children": [], "name": "{{ entry['main_value']|number_trunc()|number_format()  }}", "id": "{{ entry['crsid'] }}"}{% if loop.last == False %},{% endif %}
+{% endif %}
+{% endfor %}
+	    ]}
+    });
+});
+</script>
+{% endblock %}

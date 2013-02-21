@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% set active_page = "countries" %} 
+{% block title %}Länderübersicht {% endblock %}
+{% block body %}
+	
+		<div class="span12 spacetop spacebottom">
+			<h1>Länderübersicht</h1>
+			</div>
+			</div>
+			<div class="row">
+				  {%- for column in info|slice(6) %}
+				    <div class="span2">
+					<ul class="column-{{ loop.index }}">
+				    {%- for item in column %}
+				      <li><a href="{{ url_for('show_recipient_year', country=item.code, year=item.last_year) }}">{{ item.land }}</a></li>
+				    {%- endfor %}
+				    </ul>
+					</div>
+				  {%- endfor %}
+				</div>
+			</div>
+
+{% endblock %}

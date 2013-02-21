@@ -1,0 +1,195 @@
+{% extends "layout.html" %}
+{% set active_page = "trends" %} 
+{% block title %}Trends {% endblock %}
+{% block body %}
+	
+		<div class="span12 spacetop">
+			<h1>Trends</h1>
+            <p>Diese Seite zeigt unterschiedliche Trends der Ausgaben deutscher staatlicher Entwicklungshilfe.</p>
+			</div>
+        </div>
+
+<script type="text/javascript">
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(drawChart);
+	function drawChart() {
+	 	var dataB = new google.visualization.DataTable();
+        dataB.addColumn('string', 'Jahr');
+        dataB.addColumn('number', '{{ topsector[0]['sectorname'] }}');		
+        dataB.addColumn('number', '{{ topsector[1]['sectorname'] }}');		
+        dataB.addColumn('number', '{{ topsector[2]['sectorname'] }}');		
+        dataB.addColumn('number', '{{ topsector[3]['sectorname'] }}');		
+        dataB.addColumn('number', '{{ topsector[4]['sectorname'] }}');		
+		
+		
+        dataB.addRows([ 
+                {% for entry in sectoryears %}
+            ['{{ entry['Year'] }}',{{ entry['sector1']}},{{ entry['sector2']}},{{ entry['sector3']}},{{ entry['sector4']}},{{ entry['sector5']}}
+            ]{% if loop.last == False %},{% endif %}
+			{% endfor %}		
+				]);
+
+		var optionsB = {
+		height: 440,
+    colors: ["#ffb522","#f8e47f","#31398f","#f654ef","#21f36f"],
+		tooltip: {textStyle: {color: '#232323', fontSize: 16}, showColorCode: true},
+		chartArea: {left:40, width: 780},
+		lineWidth: 4,
+		pointSize: 5,
+		legend: {position: 'bottom', textStyle: {fontSize: 12}}
+				};
+
+	var chartB = new google.visualization.LineChart(document.getElementById('sectoryears'));
+	var formatter = new google.visualization.NumberFormat({groupingSymbol: '.', fractionDigits: 0});
+	formatter.format(dataB, 1);
+	formatter.format(dataB, 2);
+	formatter.format(dataB, 3);
+	formatter.format(dataB, 4);
+	formatter.format(dataB, 5);
+	chartB.draw(dataB, optionsB);
+	}
+</script>
+			<div class="row">
+				    <div class="span11">
+                        <h2>Top 5 Schwerpunkte 2000-2011</h2>
+                        <p>Diese Grafik zeigt die Schwerpunkte mit den meisten Ausgaben in den letzten Jahren im Vergleich. Hier zeigt sich auch der Hauptgrund für die steigenden ODA-Ausgaben der letzten Jahre, die sich maßgeblich aus Schuldenerlassen ergeben. Für einzelne Zahlen die Maus über einen Graphen bewegen.</p>
+                        <div id="sectoryears"></div>
+				</div>
+			</div>
+<div class="row spacebottom">
+
+<div class="span6">
+	<h2>Top Länder 2000 - 2011</h2>
+	<table class="table table-striped">
+						<thead>
+							<tr>
+							<th class="header">Land</th>
+							<th class="header currency">Beträge</th>
+							<th class="header">Projekte</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for entry in hitlist %}
+
+						<tr>
+	  						{% set rowloop = loop %}
+	    					<td class="sector"><a href="{{ url_for('show_recipient_year', country=entry['recipientcode'], year=2010) }}">{{ entry['land'] }}</a></td>
+							<td class="currency">{{ entry['total_sum']|number_trunc()|number_format() }} USD</td>
+							<td class="anzahl last">{{ entry['total_activities'] }}</td>
+	  					</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+</div>
+	<div class="span6">
+		<h2>Top-Länder 2011</h2>
+		<table class="table table-striped">
+							<thead>
+								<tr>
+								<th class="header">Land</th>
+								<th class="header currency">Beträge</th>
+								<th class="header">Projekte</th>
+								</tr>
+							</thead>
+							<tbody>
+							{% for entry in aktuell %}
+
+							<tr>
+		  						{% set rowloop = loop %}
+		    					<td class="sector"><a href="{{ url_for('show_recipient_year', country=entry['recipientcode'], year=2010) }}">{{ entry['land'] }}</a></td>
+								<td class="currency">{{ entry['total_sum']|number_trunc()|number_format() }} USD</td>
+								<td class="anzahl last">{{ entry['total_activities'] }}</td>
+		  					</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+					</div>
+					</div>
+				
+          <div class="row">
+          					<div class="span12">
+          					  <h2>Regionen 2000 - 2011</h2>
+                      <p>Diese Grafik zeigt die Ausgaben summiert auf Regionen in USD. Für einzelne Zahlen die Maus über einen Graphen bewegen.</p>
+                      
+          					  
+          					  <div id="regions"></div>  	
+          					  
+          					  				  
+          					  <script type="text/javascript">
+                      	google.load("visualization", "1", {packages:["corechart"]});
+                      	google.setOnLoadCallback(drawChart);
+                      	function drawChart() {
+                      	 	var dataB = new google.visualization.DataTable();
+                              dataB.addColumn('string', 'Jahr');
+                              dataB.addColumn('number', 'Naher Osten');		
+                              dataB.addColumn('number', 'Europa');		
+                              dataB.addColumn('number', 'Ostasien');		
+                              dataB.addColumn('number', 'Nord und Zentralamerika');		
+                              dataB.addColumn('number', 'Nördlich Sahara');		
+                              dataB.addColumn('number', 'Ozeanien');		
+                              dataB.addColumn('number', 'Süd- und Zentralasien');		
+                              dataB.addColumn('number', 'Südamerika');		
+                              dataB.addColumn('number', 'Südlich Sahara');
+                              dataB.addColumn('number', 'Unspezifiziert');		
+                              		
+                              
+
+                              dataB.addRows([ 
+                                      {% for entry in regions %}
+                                  ['{{ entry['Year'] }}',{{ entry['t1'] }},{{ entry['t2']}},{{ entry['t3']}},{{ entry['t4']}},{{ entry['t5']}},{{ entry['t6']}},{{ entry['t7']}},{{ entry['t8']}},{{ entry['t9']}},{{ entry['t10']}}]
+                              {% if loop.last == False %},{% endif %}
+                      			{% endfor %}		
+                      				]);
+
+                      		var optionsB = {
+                      		height: 440,
+                          colors: ["#ffb522","#f8e47f","#1c92d3","#f654ef","#21f36f", '#999999', '#1c92d3', '#333333', '#74088e', '#188907'],
+                      		tooltip: {textStyle: {color: '#232323', fontSize: 16}, showColorCode: true},
+                      		chartArea: {left:40, width: 780},
+                      		lineWidth: 4,
+                      		pointSize: 5,
+                      		legend: {position: 'bottom', textStyle: {fontSize: 12}}
+                      				};
+
+                      	var chartB = new google.visualization.LineChart(document.getElementById('regions'));
+                      	var formatter = new google.visualization.NumberFormat({groupingSymbol: '.', fractionDigits: 0});
+                      	formatter.format(dataB, 1);
+                      	formatter.format(dataB, 2);
+                      	formatter.format(dataB, 3);
+                      	formatter.format(dataB, 4);
+                      	formatter.format(dataB, 5);
+                      	formatter.format(dataB, 6);
+                      	formatter.format(dataB, 7);
+                      	formatter.format(dataB, 8);
+                      	formatter.format(dataB, 9);
+                      	formatter.format(dataB, 10);                      	
+                      	chartB.draw(dataB, optionsB);
+                      	}
+                      </script>
+          					  
+          					  </div>
+          					  </div>				
+					<div class="row">
+					<div class="span12">
+						{% include 'macro/quellen.html' %}
+					
+                    </div>
+                </div>
+                    <div class="span10 spacetop">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'offeneentwicklungshilfe';
+    var disqus_identifier = '{{request.path}}';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+
+
+{% endblock %}

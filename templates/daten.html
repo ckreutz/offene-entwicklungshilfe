@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+{% set active_page = "daten" %} 
+{% block title %}Daten {% endblock %}
+{% block body %}
+ 
+
+	<div class="span12 spacetop">
+			<h1>Daten</h1>
+
+		
+		</div>
+</div>
+<div class="row">
+
+<div class="span9">
+
+{% filter markdown %}
+
+Unser Ziel ist es ein möglichst transparentes Bild der deutschen Entwicklungshilfe zu geben. Leider ist dieses Unterfangen nicht einfach und daher beziehen wir Daten für diese Seite aus unterschiedlichen Quellen und weisen darauf hin, dass die Daten im jeweiligen Einzelfall immer überprüft werden sollen. D.h. die Daten können Fehler enthalten. Bitte dazu einfach einen Hinweis im Kommentarfeld schreiben oder auf der Open Aid <a href="http://lists.okfn.org/mailman/listinfo/open-aid-de">Mailingliste</a> posten. 
+
+Folgende weitere Anmerkungen zu den Daten:
+
+* Bedauerlicherweise werden die Daten bei der OECD bei denjenigen Ländern, die nicht mehr als Entwicklungsland zählen, einfach rückwirkend für alle vergangenen Jahre herausgenommen. D.h. hier fehlen beträchtliche Summen der vergangenen Jahre von Ländern wie Russland. 
+
+* Es gilt zu beachten, dass die großen Schwankungen bei den ODA Ausgaben in den letzten Jahren hauptsächlich auf Schuldenerlassen beruhen. 
+
+* Überregionale Ausgaben sind bisher noch nicht eingebaut, werden aber in Zukunft hier erscheinen. 
+
+* Die Zahlenwerte sind konstant, d.h. bereits inflationsbereinigt. "Constant prices (deflated amounts) include adjustments to allow for inflation rate changes in donor countries as well as changes in exchange rates between the donor currency and the US dollar over the same period." <a href="http://www.oecd.org/dac/aidstatistics/internationaldevelopmentstatisticsidsonlinedatabasesonaidandotherresourceflows.htm">Weitere Info</a>
+
+* Die Zahlen der Bundesregierung werden jährlich an die OECD geliefert, aber immer mit einem Jahr verzug. Deshalb ist das aktuelle Jahr jeweils nicht einsehbar. Der weltweit Trend zum IATI-Standard (International Aid Transparency Initiative), der aktuellere und umfassendere Angaben zu den Ausgaben der Entwicklungshilfe ergibt und den schon namhafte Organisationen, wie die Weltbank, aber auch Länder, wie die Niederlande, Großbritannien, Australien übernommen haben, wurde leider von der
+deutschen Bundesregierung bisher nicht umgesetzt. 
+
+* Leider gibt es keine detaillierte Angaben der Organisation, die das Geld vom BMZ bekommen haben, sondern nur folgende 12 Angaben bzw. Abkürzungen: BMF, BMZ, DED, DEG, F O, Fed. Inst., Fed. Min., Found, GIZ, HERMES, KFW, LG
+
+* Deshalb werden wir versuchen über weitere Kanäle rauszufinden, welche Organisationen überhaupt in diesem Gebiet aktiv sind und versuchen systematisch alle Ausgaben und Organisationen in der deutschen Entwicklungshilfe zu sammeln. 
+
+{% endfilter %}
+
+
+</div>
+<div class="span3">
+
+	
+</div>
+</div>
+<div class="span10 spacetop">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'offeneentwicklungshilfe';
+    var disqus_identifier = '{{request.path}}';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+
+
+{% endblock %}
+

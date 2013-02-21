@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% set active_page = "organisationen" %} 
+{% block title %}Organisationen {% endblock %}
+{% block body %}
+ 
+
+			<div class="span8 spaceheader spacebottom">
+				<h1>Organisation in der deutschen Entwicklungshilfe</h1>
+			</div>				
+			<div class="span4 left spaceheader spacebottom">
+    	</div>
+    	</div>
+		<div class="row">
+			<div class="span8">
+                <p>Ein Überblick zu bekommen welche deutsche Organisationen sich in der Entwicklungshilfe engagieren ist leider ohne Weiteres nicht möglich. Deshalb versuchen wir hier in einem ersten Wurf alle Organisationen aufzulisten, die sich in diesem Sektor engagieren. Dazu nutzten wir folgende Quellen: </p>
+                <ul><li><a href="http://ec.europa.eu/europeaid/work/funding/beneficiaries/index.cfm">Datenbank der Europäischen Kommission zu den geförderten Projekten deutscher Organisationen</a></li>
+                    <li>Mitglieder-Liste von <a href="http://www.venro.org/">VENRO - Verband Entwicklungspolitik deutscher Nichtregierungsorganisationen e.V.</a></li>
+                    <li><a href="https://fragdenstaat.de/anfrage/liste-aller-vom-bmz-geforderten-organisationenen-in-2010/">Informationsfreiheitsgesetz-Anfrage an das BMZ</a> für alle geförderten Organisationen in 2010</li>
+                    <li>Medienhandbuch des Bundesministeriums für wirtschaftliche Entwicklung in der Version von 2009</li>
+                </ul><p>Für Feedback oder fehlende Organisationen bitte eine Mail schicken an: Christian.Kreutz@okfn.org</p>
+            </div>
+			<div class="span3 offset1">
+                <p> Bisher gemapped:<br>
+                {{ count_org[0]['count'] }} Organisationen<br>
+                {{ summe|number_trunc()|number_format() }} Millionen Euro</p>
+		</div>	
+		</div>	
+		<div class="row spacetop">
+			<div class="span12">
+				<table id="sortTable" class="table table-striped">
+					<thead>
+						<tr>
+						<th class="header schwerpunkte headerSortUp">Organisation</th>
+						<th class="header currency">Stadt</th>
+						<th class="header projekte">Internet</th>
+						<th class="header projekte">Quelle</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for entry in organisationen %}
+					
+					<tr>
+  						{% set rowloop = loop %}
+						<td class="currency">{{ entry['Organisation'] }}</td>
+						<td class="anzahl last">{{ entry['Ort'] }}</td>
+						<td class="anzahl last">{{ entry['Internet'] }}</td>
+						<td class="anzahl last">{{ entry['Quelle'] }}</td>
+  					</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+				{% include 'macro/quellen.html' %}
+</div>
+</div>
+<div class="span10 spacetop">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'offeneentwicklungshilfe';
+    var disqus_identifier = '{{request.path}}';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% set active_page = "spenden" %} 
+{% block title %}Über diese Seite {% endblock %}
+{% block body %}
+ 
+
+	<div class="span12 spacetop">
+			<h1>Spenden</h1>
+
+		
+		</div>
+</div>
+<div class="row">
+
+<div class="span6">
+<p>Offene-entwicklungshilfe.de ist durch den Einsatz vieler unentgeltlicher Arbeitsstunden entstanden. Ihre Spende hilft uns, den Betrieb dieser Webseite zu sichern und die Plattform so weiterzuentwickeln, dass sie dauerhaft die Transparenz der deutschen Entwicklungszusammenarbeit stärkt.</p>
+<script src="https://api.spendino.de/admanager/ads/display/754"></script><noscript><a href="https://www.spendino.de/spenden/586/open-knowledge-foundation-deutschland-e-v.html" title="Open Knowledge Foundation Deutschland e.V." target="_blank">Open Knowledge Foundation Deutschland e.V.</a></noscript>
+<p>Die <a href="http://okfn.de/">Open Knowledge Foundation Deutschland e.V.</a> ist ein gemeinnütziger Verein. Ihre Spende ist daher steuerlich absetzbar. Falls Sie eine Spendenquittung wünschen, kontaktieren Sie uns bitte kurz unter Angabe Ihres Namens unter info@okfn.de.</p>
+</div>
+
+<div class="span6">
+  <dl>
+  			<dt>Empfänger:</dt>
+  			<dd>Open Knowledge Foundation Deutschland e.V.</dd>
+  			<dt>Konto:</dt>
+  			<dd>3009670</dd>
+  			<dt>Bank:</dt>
+  			<dd>830 944 95 (EthikBank)</dd>
+  			<dt>BIC:</dt>
+  			<dd>GENO DE F1 ETK</dd>
+  			<dt>IBAN:</dt>
+  			<dd>DE89830944950003009670</dd>
+  			<dt>Verwendung:</dt>
+  			<dd>Offene Entwicklungshilfe</dd>
+  		</dl>
+	
+</div>
+</div>
+<div class="span10 spacetop">
+    <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'offeneentwicklungshilfe';
+    var disqus_identifier = '{{request.path}}';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+
+{% endblock %}
+

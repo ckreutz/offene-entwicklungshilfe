@@ -1,0 +1,137 @@
+{% extends "layout.html" %}
+{% set active_page = "start" %} 
+{% block title %}Startseite {% endblock %}
+{% block body %}
+
+<div class="span12 spaceheader">
+	<h1>110.775 Projekte deutscher Entwicklungshilfe auf einen Blick</h1>
+</div>
+</div>
+<div class="row spacebottom">
+  <div class="span6"><p>
+    Offene-Entwicklungshilfe.de ist ein einzigartiges Projekt in Deutschland, das alle Aktivitäten der staatlichen deutschen Entwicklungszusammenarbeit der letzten 10 Jahre im Detail darstellt. Die Webseite wurde von dem gemeinnützigen <a href="http://okfn.de/">Open Knowledge Foundation Deutschland e.V.</a> umgesetzt. </p>
+  </div>
+  <div class="span6"><p>Sie finden eine graphische Darstellung von den Ausgaben der Entwicklungshilfe nach <a href="/laender">Ländern</a> und <a href="/schwerpunkte">Schwerpunkten</a> bis auf Projektebene. Das Projekt ist im Beta-Stadium und wird fortwährend weiter entwickelt. Anregungen, Vorschläge und Spenden sind jederzeit willkommen.</p>
+  </div>
+</div>
+<div class="row">
+<div class="span8">
+	<h2>Aktivitäten und Ausgaben zwischen 2000 und 2011</h2>
+	<p>Für genaue Zahlen die Maus über die Karte bewegen. Ausgaben in USD.
+	 </div>
+	 <div class="span4">
+	   <ul id='map-ui'>
+                <li>
+                    <a href='#' rel='okf.crs_count' class='karte map'>Projekte</a>
+                </li>
+                <li>
+                <a href='#' rel='okf.crs_years' class='karte'>Ausgaben</a>
+                </li>
+            </ul>
+	  </div>
+	  </div>
+	  <div class="row">
+      <div class="span3 offset6">
+       
+         
+                     <div class="subline">
+                                <span style="display: block; width: 15px; height: 15px; background-color:#006D2C;margin-right: 5px; float:left;"></span> 
+                                <span style="display: block; width: 15px; height: 15px; background-color:#2CA25F;margin-right: 5px;float:left;"></span> 
+                                <span style="display: block; width: 15px; height: 15px; background-color:#66C2A4;margin-right: 5px;float:left;"></span> 
+                                <span style="display: block; width: 15px; height: 15px; background-color:#B2E2E2;margin-right: 5px;float:left;"></span> 
+                                <span style="display: block; width: 15px; height: 15px; background-color:#EDF8FB;margin-right: 5px;float:left;"></span> 
+                                Ausgaben</div>
+                                </div>
+                                <div class="span3">
+                                
+                                <div class="subline">
+                                
+                                    <span style="display: block; width: 15px; height: 15px; background-color:#BD0026;margin-right: 5px; float:left;"></span> 
+                                            <span style="display: block; width: 15px; height: 15px; background-color:#F03B20;margin-right: 5px;float:left;"></span> 
+                                            <span style="display: block; width: 15px; height: 15px; background-color:#FD8D3C;margin-right: 5px;float:left;"></span> 
+                                            <span style="display: block; width: 15px; height: 15px; background-color:#FECC5C;margin-right: 5px;float:left;"></span> 
+                                            <span style="display: block; width: 15px; height: 15px; background-color:#FFFFB2;margin-right: 5px;float:left;"></span> 
+                                            Projekte
+                                            </div>
+                                            </div>
+                                            <div class="span12">
+           
+                                            <script>
+                                                               $('li a.karte').click(function(e) {
+                                                                 e.preventDefault();
+                                                                 mapbox.load($(this).attr("rel"), function(o) {                                    
+                                                                     var map = mapbox.map('world', null, null, [MM.DragHandler(map), MM.DoubleClickHandler(map)]);
+                                                                     map.interaction.refresh();
+                                                                     map.refresh();
+                                                                     map.addLayer(o.layer).zoom(2).center({ lat: 1, lon: 36 });
+                                                                   map.ui.zoomer.add();
+                                                                   map.interaction.auto().off().on(wax.movetip().parent(map.parent).events());
+                                                               });
+                                                               });
+                                                                       $('li a.map').click();
+                                                               </script>
+            <div id="world"></div>
+           
+            
+        	  
+</div>
+ </div>
+<div class="row">
+    <div class="span6">
+        <h2>Die größten Schwerpunkte nach Ausgaben </h2>
+        <p>Alle Projekte sind in 36 Schwerpunkte eingeteilt.</p>
+		<div id="mainvis" style="width: auto; height: 300px;"> </div>        
+</div>
+<div class="span6">
+    <h2>Deutsche Entwicklungshilfe</h2>
+    <p>	<div id="poptop">Gelder der offiziellen  <a href="#" rel="tooltip" title="Was sind alles ODA-Mittel?" data-content="Hinter den ODA Mitteln stecken typische Maßnahmen der Entwicklungshilfe, aber auch zum Beispiel Kosten für ausländische Studenten, die für ihr Studium in Deutschland gefördert werden und auch umstrittene Dinge, wie die Rückführung von Flüchtlingen.">Official Development Assistance (ODA)</a></div></p>
+	<script type="text/javascript">
+		google.load("visualization", "1", {packages:["corechart"]});
+		google.setOnLoadCallback(drawChart);
+    	function drawChart() {
+		 	var data = new google.visualization.DataTable();
+	        data.addColumn('string', 'Year');
+			data.addColumn('number', 'ODA Gesamt in USD');
+
+			data.addRows([ 
+
+				{% for entry in gesamt %}
+				['{{ entry['Year'] }}',{{ entry['total_sum']|number_trunc() }}
+				]{% if loop.last == False %},{% endif %}
+				{% endfor %}		
+					]);
+
+			var options = {
+		height: 340,
+			colors:['#07833b'],
+			tooltip: {textStyle: {color: '#232323', fontSize: 16}, showColorCode: true},
+			chartArea: {left:60, width: 380},
+			lineWidth: 5,
+			pointSize: 8,
+			legend: {position: 'bottom', textStyle: {fontSize: 12}}       
+			};
+
+		var chart = new google.visualization.AreaChart(document.getElementById('history'));
+		var formatter = new google.visualization.NumberFormat({groupingSymbol: '.'});
+		formatter.format(data, 1);
+		chart.draw(data, options);
+		}
+    </script>
+    	<div id="history"></div>
+</div>
+</div>
+{% include 'macro/openspending.html' %}
+
+
+<script>
+$(document).ready(function() {
+    OpenSpending.DatasetPage.init({
+        treemapData: {"children": [
+	{% for entry in entries|sort(attribute='main_value') %}
+{"data": {"title": "{{ entry['sector_de'] }}", "$area": {{ entry['treearea'] }}, "$color": "{{ entry['color'] }}", "value": "{{ entry['main_value']|number_trunc()|number_format() }} USD", "printable_value": "{{ entry['sector_de'] }}", "link": "{{ url_for('show_schwerpunkt', schwerpunkt=entry['sectorcode']) }}", "show_title": {{ entry['show'] }}}, "children": [], "name": "{{ entry['main_value']|number_trunc()|number_format()  }}", "id": "{{ entry['crsid'] }}"}{% if loop.last == False %},{% endif %}
+{% endfor %}
+	    ]}
+    });
+});
+</script>
+{% endblock %}

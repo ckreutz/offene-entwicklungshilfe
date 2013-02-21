@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="de">
+<head>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Open Aid Data: Offene Entwicklungshilfe | {% block title %}{% endblock %}
+	</title>
+	<meta name="keywords" content="Entwicklungshilfe, Entwicklungszusammenarbeit" />
+	<meta name="description" content="Alle Ausgaben der deutschen Entwicklungshilfe auf einen Blick und im Detail." />
+ <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Le styles -->
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
+	
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<script type=text/javascript src="{{
+		  url_for('static', filename='js/jquery.sparkline.min.js') }}"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	{% if active_page == "start" %} 
+  <script src='{{ url_for('static', filename='js/mapbox.js') }}'></script>
+       <link href='{{ url_for('static', filename='css/mapbox.css') }}' rel='stylesheet' />
+	{% endif %}
+	
+</head>
+<body data-spy="scroll">
+	{% set navigation_bar = [
+		('/', 'start', 'Start'),		
+	    ('/laender/', 'countries', 'Länder'),
+	    ('/schwerpunkte/', 'schwerpunkte', 'Schwerpunkte'),
+	    ('/trends/', 'trends', 'Trends'),
+	    ('/analyse/', 'analyse', 'Analyse'),  
+	    ('/ueber/', 'ueber', 'Über diese Seite'),
+	    ('/daten/', 'daten', 'Daten'),
+	    ('/spenden/', 'spenden', 'Spenden')
+			] -%}
+			{% set active_page = active_page|default('start') -%}
+			<div class="navbar navbar-fixed-top">
+			      <div class="navbar-inner">
+			        <div class="container-fluid">
+			          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+			            <span class="icon-bar"></span>
+			          </a>
+			          <a class="brand" href="/">Open Aid Data</a>
+			          <div class="nav-collapse">
+			            <ul class="nav">
+							{% for href, id, caption in navigation_bar %}
+										<li{% if id == active_page %} class="active"{% endif %}><a href="{{ href|e }}">{{ caption|e }}</a></li>	
+															{% endfor %}			      
+			                <li><a href="http://www.openaid.de" target="_blank">OpenAid.de</a></li> 
+			            </ul>
+			          </div><!--/.nav-collapse -->
+			        </div>
+			      </div>
+			    </div>
+		
+					
+	<div class="container frame">
+		<div class="row">
+			<div class="span12">
+				<div id="site-title"><a href="/">Offene Entwicklungshilfe</a><span class="beta">Beta</span></div>
+				<div id="slogan">Deutsche Entwicklungszusammenarbeit analysieren und recherchieren</div>
+				</div>
+			<div class="span4 right">	
+			</div>		
+		</div>
+		<div class="row">
+			<div class="span12">	
+				<div id="navigation">
+					<div id="main-nav">
+		
+						
+					<div class="clear"></div>
+					<div id="banner"> </div>
+					</div>
+				</div>		
+			</div>
+		</div>
+		<div class="row">
+			<div class="span6">
+			</div>
+		</div>
+		<div class="row">
+				{% for message in get_flashed_messages() %}
+				<div class="flash">{{ message }}</div>
+							  {% endfor %}
+							  {% block body %}{% endblock %}
+		</div><!-- /grids -->
+	</div>	<!-- /container -->
+	
+<div id="footer">		
+<footer>
+   <div class="site">
+     <a class="logo" href="http://okfn.de"><img src="{{ url_for('static', filename='img/okf.png') }}" /></a>
+     <p>
+       Offene-Entwicklungshilfe.de ist ein ehrenamtliches Projekt der 
+       <a href="http://okfn.de">Open Knowledge Foundation Deutschland e.V.</a>
+      Die Daten stammen aus dem <a href="http://stats.oecd.org/index.aspx?DataSetCode=CRS1" target="_blank">Creditor Reporting System der OECD</a>. Beachten Sie den Hinweis zur
+       <a href="/daten">Datenqualität</a>.
+     </p>
+     <ul>
+       <li><a href="http://offenedaten.de">OffeneDaten.de</a></li>
+       <li><a href="http://offenerhaushalt.de">OffenerHaushalt.de</a></li>
+       <li><a href="http://fragdenstaat.de">FragDenStaat.de</a></li>
+       <li><a href="http://offenesparlament.de">OffenesParlament.de</a></li>
+       <li><a href="http://lists.okfn.org/mailman/listinfo/open-aid-de">Mailingliste</a></li>
+       
+       
+       <li>&middot;</li>
+       <li><a href="http://twitter.com/okfde">@OKFde</a>, <a href="http://twitter.com/ckreutz">@ckreutz</a></li>
+       <li><a href="/impressum/">Impressum</a></li>
+     </ul>
+   </div>
+ </footer>
+</div>	<!-- /footer -->
+
+
+<script type=text/javascript src="{{
+  url_for('static', filename='js/bootstrap-scrollspy.js') }}"></script>
+<script type=text/javascript src="{{
+  url_for('static', filename='js/bootstrap-dropdown.js') }}"></script>	
+<script type=text/javascript src="{{
+  url_for('static', filename='js/bootstrap-tooltip.js') }}"></script>
+<script type=text/javascript src="{{
+  url_for('static', filename='js/bootstrap-popover.js') }}"></script>
+<script type=text/javascript src="{{
+  url_for('static', filename='js/jquery.tablesorter.min.js') }}"></script>
+<script type=text/javascript src="{{
+  url_for('static', filename='js/bootstrap-collapse.js') }}"></script>
+
+
+	<script type="text/javascript">
+			$(document).ready(function() {
+		    $("#popleft [rel=tooltip]").popover({'placement': 'left'});
+		    $("#poptop [rel=tooltip]").popover({'placement': 'top'});
+		    $("#popright [rel=tooltip]").popover({'placement': 'right'});
+			$('#navbar').scrollspy();
+		  });	
+		
+		$(function(){ 
+		  $("#sortTable").tablesorter(); 
+		});
+	</script>
+	<!-- Piwik -->
+  <script type="text/javascript">
+  var pkBaseURL = (("https:" == document.location.protocol) ? "https://piwik.crisscrossed.net/" : "http://piwik.crisscrossed.net/");
+  document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+  </script><script type="text/javascript">
+  try {
+  var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 9);
+  piwikTracker.trackPageView();
+  piwikTracker.enableLinkTracking();
+  } catch( err ) {}
+  </script><noscript><p><img src="http://piwik.crisscrossed.net/piwik.php?idsite=9" style="border:0" alt="" /></p></noscript>
+  <!-- End Piwik Tracking Code -->
+</body>
+</html>
