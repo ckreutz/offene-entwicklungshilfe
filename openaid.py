@@ -176,7 +176,7 @@ def show_sektor(country,sector):
     activities = query_db('SELECT sectorcode.sector_de as sector_de, Year, sectorcode, count(recipientcode) as total_activities FROM crs join sectorcode on sectorcode.code = crs.sectorcode where Year between 2000 and 2012 and recipientcode = ? and sectorcode = ? group by Year', [country, sector])
     
     totalYear = query_db('SELECT round(sum(usd_commitment * 1000000)) as total, round(sum(usd_disbursement * 1000000)) as disb_total, recipientname, countries.land, sectorname FROM crs join countries on countries.code = crs.recipientcode where Year between 2000 and 2012 and recipientcode = ? and sectorcode = ?', [country, sector], one=True)
-    total = totalYear['total']
+    total = totalYear['disb_total']
     
     history = query_db('SELECT round(sum(usd_disbursement * 1000000),2) as main_value, round(sum(usd_disbursement * 1000000),2) as disb_value, Year FROM crs where recipientcode = ? and sectorcode = ? and Year between 2000 and 2012 group by Year order by Year asc', [country, sector])
     
