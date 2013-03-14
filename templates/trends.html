@@ -73,7 +73,7 @@
 
 						<tr>
 	  						{% set rowloop = loop %}
-	    					<td class="sector"><a href="{{ url_for('show_recipient_year', country=entry['recipientcode'], year=2010) }}">{{ entry['land'] }}</a></td>
+	    					<td class="sector"><a href="{{ url_for('show_recipient_year', country=entry['recipientcode'], year=2011) }}">{{ entry['land'] }}</a></td>
 							<td class="currency">{{ entry['total_sum']|number_trunc()|number_format() }} USD</td>
 							<td class="anzahl last">{{ entry['total_activities'] }}</td>
 	  					</tr>
@@ -96,7 +96,7 @@
 
 							<tr>
 		  						{% set rowloop = loop %}
-		    					<td class="sector"><a href="{{ url_for('show_recipient_year', country=entry['recipientcode'], year=2010) }}">{{ entry['land'] }}</a></td>
+		    					<td class="sector"><a href="{{ url_for('show_recipient_year', country=entry['recipientcode'], year=2011) }}">{{ entry['land'] }}</a></td>
 								<td class="currency">{{ entry['total_sum']|number_trunc()|number_format() }} USD</td>
 								<td class="anzahl last">{{ entry['total_activities'] }}</td>
 		  					</tr>

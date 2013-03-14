@@ -40,7 +40,7 @@
 					
 					<tr>
   						{% set rowloop = loop %}
-    					<td class="sector"><a href="{{ url_for('show_recipient_year', country=entry.recipientcode, year=2010) }}">{{ entry['land'] }}</a></td>
+    					<td class="sector"><a href="{{ url_for('show_recipient_year', country=entry.recipientcode, year=2011) }}">{{ entry['land'] }}</a></td>
 						<td class="currency">{{ entry['main_value']|number_trunc()|number_format() }} USD</td>
                         <td class="anzahl last">{{ entry['activities'] }}</td>
   					</tr>
@@ -74,7 +74,7 @@ $(document).ready(function() {
         treemapData: {"children": [
 	{% for entry in entries|sort(attribute='main_value') %}
 		{% if entry['main_value'] > 0 %}
-{"data": {"title": "{{ entry['land'] }}", "$area": {{ entry['treearea'] }}, "$color": "{{ entry['color'] }}", "value": "{{ entry['main_value']|number_trunc()|number_format() }} USD", "printable_value": "{{ entry['land'] }}", "link": "{{ url_for('show_recipient_year', country=entry.recipientcode, year=2010) }}", "show_title": {{ entry['show'] }}}, "children": [], "name": "{{ entry['main_value']|number_trunc()|number_format()  }}", "id": "{{ entry['crsid'] }}"}{% if loop.last == False %},{% endif %}
+{"data": {"title": "{{ entry['land'] }}", "$area": {{ entry['treearea'] }}, "$color": "{{ entry['color'] }}", "value": "{{ entry['main_value']|number_trunc()|number_format() }} USD", "printable_value": "{{ entry['land'] }}", "link": "{{ url_for('show_recipient_year', country=entry.recipientcode, year=2011) }}", "show_title": {{ entry['show'] }}}, "children": [], "name": "{{ entry['main_value']|number_trunc()|number_format()  }}", "id": "{{ entry['crsid'] }}"}{% if loop.last == False %},{% endif %}
 {% endif %}
 {% endfor %}
 	    ]}
